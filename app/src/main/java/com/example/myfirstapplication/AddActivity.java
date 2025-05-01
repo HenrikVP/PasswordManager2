@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class AddActivity extends AppCompatActivity {
 
     EditText account, user, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +34,15 @@ public class AddActivity extends AppCompatActivity {
         findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (account.getText().toString().isEmpty()  ||
+                if (account.getText().toString().isEmpty() ||
                         user.getText().toString().isEmpty() ||
                         password.getText().toString().isEmpty()
-                )
-                {
+                ) {
                     Toast.makeText(
                             getApplicationContext(),
                             "You need to fill out EVERYTHING!",
                             Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     addAccount();
                 }
 
