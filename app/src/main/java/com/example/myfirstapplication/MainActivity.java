@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,11 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    List<Account> accounts = new ArrayList<>();
-
-    Button button;
-    TextView text;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +41,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Account retrievedAccount = (Account)getIntent().getSerializableExtra("Account");
-        if (retrievedAccount != null) accounts.add(retrievedAccount);
+        Account retrievedAccount = (Account) getIntent().getSerializableExtra("Account");
+        if (retrievedAccount != null) DataIO.accounts.add(retrievedAccount);
 
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("Setting Text", "Here we get a debug for our logcat");
-//                text.setText("Enjoy " + getString(R.string.app_name));
-//
-//                Intent intent = new Intent(getApplicationContext(), ShowActivity.class);
-//                intent.putExtra("Account", account);
-//                startActivity(intent);
-//            }
-//        });
+        listView = findViewById(R.id.list_accounts);
 
+        ArrayAdapter<Account> adapter = new ArrayAdapter<>(
+                getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                DataIO.accounts
+        );
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ShowActivity.class);
+                intent.putExtra("Account", DataIO.accounts.get(position));
+                startActivity(intent);
+            }
+        });
     }
 }

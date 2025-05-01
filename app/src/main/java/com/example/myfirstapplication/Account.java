@@ -2,9 +2,12 @@ package com.example.myfirstapplication;
 
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Account implements Serializable {
+
     private String accountName;
     private String userName;
     private String password;
@@ -15,6 +18,9 @@ public class Account implements Serializable {
         this.password = password;
     }
 
+    @NonNull
+    @Override
+    public String toString() { return accountName + "\n" + userName;}
     public String getAccountName() { return accountName;}
     public void setAccountName(String accountName) { this.accountName = accountName;}
     public String getUserName() {return userName;}
