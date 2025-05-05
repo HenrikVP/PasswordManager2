@@ -8,6 +8,15 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
     private String accountName;
     private String userName;
     private String password;
