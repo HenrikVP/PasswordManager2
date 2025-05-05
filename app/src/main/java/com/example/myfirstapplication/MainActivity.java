@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         list = DataIO.getInstance().getAccounts();
+        list = DataIO.getInstance(getApplicationContext()).getAccounts();
         Account retrievedAccount = (Account) getIntent().getSerializableExtra("Account");
-        if (retrievedAccount != null) list.add(retrievedAccount);
+        if (retrievedAccount != null) DataIO.getInstance(getApplicationContext()).addAccount(retrievedAccount);
 
         listView = findViewById(R.id.list_accounts);
 
