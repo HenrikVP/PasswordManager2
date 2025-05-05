@@ -21,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
+    List<Account> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+         list = DataIO.getInstance().getAccounts();
         Account retrievedAccount = (Account) getIntent().getSerializableExtra("Account");
-        if (retrievedAccount != null) DataIO.accounts.add(retrievedAccount);
+        if (retrievedAccount != null) list.add(retrievedAccount);
 
         listView = findViewById(R.id.list_accounts);
 
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(
                 getApplicationContext(),
                 android.R.layout.simple_list_item_1,
-                DataIO.accounts
+                list
         );
 
         listView.setAdapter(adapter);
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ShowActivity.class);
-                intent.putExtra("Account", DataIO.accounts.get(position));
+                intent.putExtra("Account", list.get(position));
                 startActivity(intent);
             }
         });
