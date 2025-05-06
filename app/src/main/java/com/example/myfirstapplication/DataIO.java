@@ -3,16 +3,13 @@ package com.example.myfirstapplication;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,27 +35,17 @@ public class DataIO {
     }
 
     public void getAccountsFromApi(){
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(
                 Request.Method.GET, url, null,
                 response -> {
-                    // Success: handle response
-                    try {
-                        //Log.d("Volley", "getAccountsFromApi: " + response.getString("AccountName"));
                         if (response != null) {
                             Type type = new TypeToken<List<Account>>() {
                             }.getType();
                             accounts = gson.fromJson(response.toString(), type);
                         }
-                        //String title = response.getString("title");
-                        //Toast.makeText(this, "Title: " + title, Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 },
                 error -> {
-                    // Error: handle error
                     Log.e("Volley", "getAccountsFromApi: " + error.getMessage());
-                    //Toast.makeText(this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                 }
         );
         queue.add(jsonRequest);
